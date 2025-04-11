@@ -3,19 +3,19 @@ SELECT value, COUNT(*) AS frequency
 FROM (
     SELECT value1 AS value
     FROM Results
-    WHERE value1 BETWEEN 16 AND 80 AND personId = '2014SCHW02' AND eventId = '333fm'
+    WHERE value1 BETWEEN 1 AND 80 AND personId = '2014SCHW02' AND eventId = '333fm'
 
     UNION ALL
 
     SELECT value2
     FROM Results
-    WHERE value2 BETWEEN 16 AND 80 AND personId = '2014SCHW02' AND eventId = '333fm'
+    WHERE value2 BETWEEN 1 AND 80 AND personId = '2014SCHW02' AND eventId = '333fm'
 
     UNION ALL
 
     SELECT value3
     FROM Results
-    WHERE value3 BETWEEN 16 AND 80 AND personId = '2014SCHW02' AND eventId = '333fm'
+    WHERE value3 BETWEEN 1 AND 80 AND personId = '2014SCHW02' AND eventId = '333fm'
 ) AS all_values
 GROUP BY value
 ORDER BY value;

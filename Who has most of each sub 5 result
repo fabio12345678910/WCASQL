@@ -1,0 +1,55 @@
+WITH all_values AS (
+    SELECT personId, value1 AS value
+    FROM Results
+    WHERE value1 BETWEEN 1 AND 500 AND eventId = '333'
+    UNION ALL
+
+    SELECT personId, value2
+    FROM Results
+    WHERE value2 BETWEEN 1 AND 500 AND eventId = '333'
+
+    UNION ALL
+
+    SELECT personId, value3
+    FROM Results
+    WHERE value3 BETWEEN 1 AND 500 AND eventId = '333'
+
+    UNION ALL
+    
+    SELECT personId, value4
+    FROM Results
+    WHERE value4 BETWEEN 1 AND 500 AND eventId = '333'
+
+    UNION ALL
+    
+    SELECT personId, value5
+    FROM Results
+    WHERE value5 BETWEEN 1 AND 500 AND eventId = '333'
+
+
+
+),
+
+counts AS (
+    SELECT value, personId, COUNT(*) as frequency
+    FROM all_values
+    GROUP BY value, personId
+),
+
+ranked AS (
+SELECT *, RANK() OVER (PARTITION BY value ORDER BY frequency DESC) as rnk
+FROM counts
+
+),
+
+top_ranked AS (
+SELECT value, personId, frequency
+FROM ranked
+WHERE rnk = 1
+)
+
+SELECT value, GROUP_CONCAT(personId SEPARATOR ', ') AS top_personsIds, frequency
+FROM top_ranked
+GROUP BY value
+ORDER BY value ASC
+;

@@ -1,0 +1,39 @@
+WITH all_values AS (
+    SELECT personId, value1 AS value
+    FROM Results
+    WHERE value1 BETWEEN 16 AND 80 AND countryId = 'United Kingdom'
+
+    UNION ALL
+
+    SELECT personId, value2
+    FROM Results
+    WHERE value2 BETWEEN 16 AND 80 AND countryId = 'United Kingdom'
+
+    UNION ALL
+
+    SELECT personId, value3
+    FROM Results
+    WHERE value3 BETWEEN 16 AND 80 AND countryId = 'United Kingdom'
+),
+counts AS (
+    SELECT value, personId, COUNT(*) AS frequency
+    FROM all_values
+    GROUP BY value, personId
+),
+ranked AS (
+    SELECT *,
+           RANK() OVER (PARTITION BY value ORDER BY frequency DESC) AS rnk
+    FROM counts
+),
+top_ranked AS (
+    SELECT value, personId, frequency
+    FROM ranked
+    WHERE rnk = 1
+)
+SELECT 
+    value,
+    GROUP_CONCAT(personId ORDER BY personId SEPARATOR ', ') AS top_personIds,
+    MAX(frequency) AS frequency
+FROM top_ranked
+GROUP BY value
+ORDER BY value;

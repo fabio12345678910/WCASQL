@@ -35,7 +35,7 @@ top_ranked AS (
 
 SELECT 
     value,
-    GROUP_CONCAT(personId ORDER BY personId SEPARATOR ', ') AS top_personIds, frequency
+    GROUP_CONCAT(personId SEPARATOR ', ') AS top_personIds, frequency
 FROM top_ranked
 GROUP BY value
 ORDER BY value ASC;

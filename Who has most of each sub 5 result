@@ -1,39 +1,39 @@
 WITH all_values AS (
-    SELECT personId, value1 AS value
-    FROM Results
-    WHERE value1 BETWEEN 1 AND 500 AND eventId = '333'
+    SELECT person_id, value1 AS value
+    FROM results
+    WHERE value1 BETWEEN 1 AND 500 AND event_id = '333'
     UNION ALL
 
-    SELECT personId, value2
-    FROM Results
-    WHERE value2 BETWEEN 1 AND 500 AND eventId = '333'
+    SELECT person_id, value2
+    FROM results
+    WHERE value2 BETWEEN 1 AND 500 AND event_id = '333'
 
     UNION ALL
 
-    SELECT personId, value3
-    FROM Results
-    WHERE value3 BETWEEN 1 AND 500 AND eventId = '333'
-
-    UNION ALL
-    
-    SELECT personId, value4
-    FROM Results
-    WHERE value4 BETWEEN 1 AND 500 AND eventId = '333'
+    SELECT person_id, value3
+    FROM results
+    WHERE value3 BETWEEN 1 AND 500 AND event_id = '333'
 
     UNION ALL
     
-    SELECT personId, value5
-    FROM Results
-    WHERE value5 BETWEEN 1 AND 500 AND eventId = '333'
+    SELECT person_id, value4
+    FROM results
+    WHERE value4 BETWEEN 1 AND 500 AND event_id = '333'
+
+    UNION ALL
+    
+    SELECT person_id, value5
+    FROM results
+    WHERE value5 BETWEEN 1 AND 500 AND event_id = '333'
 
 
 
 ),
 
 counts AS (
-    SELECT value, personId, COUNT(*) as frequency
+    SELECT value, person_id, COUNT(*) as frequency
     FROM all_values
-    GROUP BY value, personId
+    GROUP BY value, person_id
 ),
 
 ranked AS (
@@ -43,12 +43,12 @@ FROM counts
 ),
 
 top_ranked AS (
-SELECT value, personId, frequency
+SELECT value, person_id, frequency
 FROM ranked
 WHERE rnk = 1
 )
 
-SELECT value, GROUP_CONCAT(personId SEPARATOR ', ') AS top_personsIds, frequency
+SELECT value, GROUP_CONCAT(person_id SEPARATOR ', ') AS top_personsIds, frequency
 FROM top_ranked
 GROUP BY value
 ORDER BY value ASC

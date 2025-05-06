@@ -1,25 +1,25 @@
 WITH all_values AS (
-    SELECT personId, value1 AS value
-    FROM Results
-    WHERE value1 BETWEEN 16 AND 80 AND countryId = 'United Kingdom'
+    SELECT person_id, value1 AS value
+    FROM results
+    WHERE value1 BETWEEN 16 AND 80 AND country_id = 'United Kingdom'
 
     UNION ALL
 
-    SELECT personId, value2
-    FROM Results
-    WHERE value2 BETWEEN 16 AND 80 AND countryId = 'United Kingdom'
+    SELECT person_id, value2
+    FROM results
+    WHERE value2 BETWEEN 16 AND 80 AND country_id = 'United Kingdom'
 
     UNION ALL
 
-    SELECT personId, value3
-    FROM Results
-    WHERE value3 BETWEEN 16 AND 80 AND countryId = 'United Kingdom'
+    SELECT person_id, value3
+    FROM results
+    WHERE value3 BETWEEN 16 AND 80 AND country_id = 'United Kingdom'
 ),
 
 counts AS (
-    SELECT value, personId, COUNT(*) AS frequency
+    SELECT value, person_id, COUNT(*) AS frequency
     FROM all_values
-    GROUP BY value, personId
+    GROUP BY value, person_id
 ),
 
 ranked AS (
@@ -28,14 +28,16 @@ ranked AS (
 ),
 
 top_ranked AS (
-    SELECT value, personId, frequency
+    SELECT value, person_id, frequency
     FROM ranked
     WHERE rnk = 1
 )
 
 SELECT 
     value,
-    GROUP_CONCAT(personId SEPARATOR ', ') AS top_personIds, frequency
+    GROUP_CONCAT(person_id SEPARATOR ', ') AS top_personIds, frequency
 FROM top_ranked
 GROUP BY value
-ORDER BY value ASC;
+
+ORDER By value DESC;
+

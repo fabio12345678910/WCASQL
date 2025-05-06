@@ -1,17 +1,21 @@
-SELECT competitionId, value1 AS value, updated_at
-FROM Results
-WHERE value1 < 25 AND value1 > 0 AND personId = '2014SCHW02'
+select competition_id, value1 AS value, updated_at
+from results
 
-UNION ALL
+where value1 > 0 and value1 < 25 and person_id = '2014SCHW02'
 
-SELECT competitionId, value2, updated_at
-FROM Results
-WHERE value2 < 25 AND value2 > 0 AND personId = '2014SCHW02'
+union all
 
-UNION ALL
+select competition_id, value2, updated_at
+from results
 
-SELECT competitionId, value3, updated_at
-FROM Results
-WHERE value3 < 25 AND value3 > 0 AND personId = '2014SCHW02'
+where value2 > 0 and value2 < 25 and person_id = '2014SCHW02'
 
-ORDER BY updated_at DESC;
+union all
+
+select competition_id, value3, updated_at
+from results
+
+where value3 > 0 and value3 < 25 and person_id = '2014SCHW02'
+
+order by updated_at desc;
+;

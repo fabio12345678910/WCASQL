@@ -39,5 +39,5 @@ SELECT
 FROM top_ranked
 GROUP BY value
 
-ORDER By value DESC;
+ORDER By value ASC;
 
